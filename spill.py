@@ -4,9 +4,10 @@ import random
 import numpy as np
 
 class Spillerobjekt():
-    def __init__(self, start_x, start_y):
+    def __init__(self, start_x, start_y, image):
         self.x = start_x
         self.y = start_y
+        self.sheet = image
         self.color = "grey"
         self.size = 5
         self.rect = pygame.Rect((self.x, self.y),(self.size*2, self.size*2))
@@ -14,6 +15,14 @@ class Spillerobjekt():
     def tegn(self):
         pygame.draw.rect(screen, self.color, self.rect)
         self.rect = pygame.Rect((self.x, self.y), (self.size*2, self.size*2))
+
+    def get_image(self, frame, width, height, scale, colour):
+        image = pygame.Surface((width, height)).convert_alpha()
+        image.blit(self.sheet, (0, 0), ((frame * width), 0, width, height))
+        image = pygame.transform.scale(image, (width * scale, height * scale))
+        image.set_colorkey(colour)
+
+        return image
 
 class Trampoline(Spillerobjekt):
     def __init__(self, start_x, start_y):
