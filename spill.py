@@ -21,8 +21,8 @@ class Trampoline(Spillerobjekt):
         self.x = start_x
         self.y = start_y
         self.color = "white"
-        self.size = 8
-        self.fart = 5
+        self.size = 15
+        self.fart = 10
         self.rect = pygame.Rect((self.x, self.y),(self.size*10, self.size*2))
 
     def oppdater(self):
@@ -37,17 +37,30 @@ class Trampoline(Spillerobjekt):
         self.rect = pygame.Rect((self.x, self.y), (self.size*10, self.size*2))
 
 class Isak(Spillerobjekt):
-    def __init__(self, start_x, start_y):
+    def __init__(self, start_x, start_y, start_vx, start_vy):
         super().__init__(start_x, start_y)
         self.x = start_x
         self.y = start_y
         self.r = 10
-        self.a = 0.02
-        self.v = 0
+        self.v = 5
+        self.vx = start_vx
+        self.vy = start_vy
         self.rect = pygame.Rect((self.x -(math.sqrt(2)/2)*self.r, self.y-(math.sqrt(2)/2)*self.r), (math.sqrt(2)*self.r, math.sqrt(2)*self.r))
 
     def oppdater(self):
         self.rect = pygame.Rect((self.x -(math.sqrt(2)/2)*self.r, self.y-(math.sqrt(2)/2)*self.r), (math.sqrt(2)*self.r, math.sqrt(2)*self.r))
+    
+    def oppdater(self):
+        self.rect = pygame.Rect((self.x -(math.sqrt(2)/2)*self.r, self.y-(math.sqrt(2)/2)*self.r), (math.sqrt(2)*self.r, math.sqrt(2)*self.r))
+        self.x += self.vx * self.v
+        self.y += self.vy * self.v
+
+        if self.x > screen.get_width() or self.x < 0:
+            self.vx *= -1
+        
+        if self.y > screen.get_height() or self.y < 0:
+            self.vy *= -1    
+
 
 
 
@@ -62,7 +75,11 @@ font2 = pygame.font.SysFont("Arial", 32)
 
 
 spiller = Trampoline(screen.get_width()/2, screen.get_height()/1.2)
-ball = Isak(screen.get_width()/2, screen.get_height()/2)
+ball = Isak(screen.get_width()/2, screen.get_height()/2, random.choice([1, -1]), 1)
+
+counter = 0
+poeng = 0
+poeng_font = pygame.font.SysFont("Arial", int(screen.get_height()/30))
 # Initialiserer objekter 
 
 STARTING = True
@@ -109,20 +126,29 @@ while RUNNING:
         pygame.draw.rect(screen, "white", ball.rect)
 
         # Fartegenskaper til ball
-        ball.y += ball.v
-        ball.v += ball.a
 
         # Kollisjon 
-
-        if pygame.Rect.colliderect(spiller.rect, ball.rect):
-            ball.a -= 0.2
-            while ball.v < 2:
-                ball.v = 0
-                ball.a = 0.02
-                ball.y += ball.v
-                ball.v += ball.a
-            
     
+        if pygame.Rect.colliderect(spiller.rect, ball.rect):
+            if ball.vy > 0:
+                ball.vy *= -1
+                poeng += 1
+                counter += 1
+                  
+
+
+        if counter == 5:
+            ball.v = ball.v * 1.5
+            spiller.size = spiller.size * 0.8
+            counter = 0
+            
+        # Poeng
+        tekst = poeng_font.render(str(poeng), True, "white")
+        tekst_rect = tekst.get_rect(center=(screen.get_width()/2, screen.get_height()/2))
+        screen.blit(tekst, tekst_rect)
+
+        
+
     
     # Oppdaterer hele skjermen 
 
