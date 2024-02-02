@@ -112,7 +112,7 @@ while RUNNING:
             break
 
 
-    background = pygame
+    screen.fill("black")
 
     if STARTING:
         # Tegn tittel tekst osv
