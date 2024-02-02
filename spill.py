@@ -5,10 +5,9 @@ import numpy as np
 from pygame import mixer
 
 class Spillerobjekt():
-    def __init__(self, start_x, start_y, image):
+    def __init__(self, start_x, start_y):
         self.x = start_x
         self.y = start_y
-        self.sheet = image
         self.color = "grey"
         self.size = 5
         self.rect = pygame.Rect((self.x, self.y),(self.size*2, self.size*2))
