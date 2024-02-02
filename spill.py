@@ -2,6 +2,7 @@ import pygame
 import math
 import random
 import numpy as np
+from pygame import mixer
 
 class Spillerobjekt():
     def __init__(self, start_x, start_y):
@@ -85,9 +86,10 @@ class Isak(Spillerobjekt):
 
 pygame.init() 
 
-screen = pygame.display.set_mode((700, 500)) # Setter skjermen til 700x500 piksler. 
+screen = pygame.display.set_mode((700, 600)) # Setter skjermen til 700x500 piksler. 
 clock = pygame.time.Clock() 
-
+mixer.music.load("Rihanna - Where Have You Been (Hardstyle Bootleg).wav")
+mixer.music.play(-1)
 
 font = pygame.font.SysFont("Arial", int(screen.get_height()/30))
 font2 = pygame.font.SysFont("Arial", 32)
@@ -121,7 +123,7 @@ while RUNNING:
             break
 
 
-    screen.fill("black") 
+    screen.fill("black")
 
     if STARTING:
         # Tegn tittel tekst osv
