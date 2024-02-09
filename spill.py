@@ -191,6 +191,10 @@ while RUNNING:
             ball.v = 5
             ball.r = 10
             ball = Isak(screen.get_width()/2, screen.get_height()/2, random.choice([1, -1]), 1)
+            spiller.size = 15
+            spiller = Trampoline(screen.get_width()/2, screen.get_height()/1.2)
+            spiller.image = pygame.transform.scale(spiller.image, (spiller.size*10, spiller.size*2))
+
             counter = 0
             poeng = 0
             INGAME = False
