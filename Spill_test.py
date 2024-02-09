@@ -2,6 +2,7 @@ import pygame
 import math
 import random
 import numpy as np
+from pygame import mixer
 
 class Spillerobjekt():
     def __init__(self, start_x, start_y):
@@ -10,10 +11,11 @@ class Spillerobjekt():
         self.color = "grey"
         self.size = 5
         self.rect = pygame.Rect((self.x, self.y),(self.size*2, self.size*2))
-
+"""
     def tegn(self):
         pygame.draw.rect(screen, self.color, self.rect)
         self.rect = pygame.Rect((self.x, self.y), (self.size*2, self.size*2))
+"""
 
 class Trampoline(Spillerobjekt):
     def __init__(self, start_x, start_y):
@@ -37,31 +39,27 @@ class Trampoline(Spillerobjekt):
         self.rect = pygame.Rect((self.x, self.y), (self.size*10, self.size*2))
 
 class Isak(Spillerobjekt):
-    def __init__(self, start_x, start_y, start_vx, start_vy, image):
+    def __init__(self, start_x, start_y, start_vx, start_vy):
         super().__init__(start_x, start_y)
         self.x = start_x
         self.y = start_y
         self.r = 10
         self.v = 5
-#ISAK
-        self.image = pygame.image.load("xxx.png")
-        self.image = pygame.transform.scale(self.image, (self.size*7, self.size*10))
+        self.image = pygame.image.load("stein1.png")
+        self.image = pygame.transform.scale(self.image, (self.size*20, self.size*25))
         self.rect = self.image.get_rect(center=(self.x, self.y))
-
-        self.sheet = image
         self.vx = start_vx
         self.vy = start_vy
-        self.rect = pygame.Rect((self.x -(math.sqrt(2)/2)*self.r, self.y-(math.sqrt(2)/2)*self.r), (math.sqrt(2)*self.r, math.sqrt(2)*self.r))
-
 #ISAK
     def tegn(self):
         screen.blit(self.image, self.rect.topleft)
+        """
+        pygame.draw.rect(screen, self.color, self.rect)
+        self.rect = pygame.Rect((self.x, self.y), (self.size*2, self.size*2))
+        """
 
     def oppdater(self):
-        self.rect = pygame.Rect((self.x -(math.sqrt(2)/2)*self.r, self.y-(math.sqrt(2)/2)*self.r), (math.sqrt(2)*self.r, math.sqrt(2)*self.r))
-    
-    def oppdater(self):
-        self.rect = pygame.Rect((self.x -(math.sqrt(2)/2)*self.r, self.y-(math.sqrt(2)/2)*self.r), (math.sqrt(2)*self.r, math.sqrt(2)*self.r))
+        self.rect = self.image.get_rect(center=(self.x, self.y))
         self.x += self.vx * self.v
         self.y += self.vy * self.v
 
@@ -85,16 +83,18 @@ class Isak(Spillerobjekt):
 
 pygame.init() 
 
-screen = pygame.display.set_mode((700, 500)) # Setter skjermen til 700x500 piksler. 
+screen = pygame.display.set_mode((700, 600)) # Setter skjermen til 700x500 piksler. 
 clock = pygame.time.Clock() 
-
+mixer.music.load("Rihanna - Where Have You Been (Hardstyle Bootleg).wav")
+mixer.music.play(-1)
 
 font = pygame.font.SysFont("Arial", int(screen.get_height()/30))
 font2 = pygame.font.SysFont("Arial", 32)
-
+"""
 sprite_sheet_image = pygame.image.load('Mort.png').convert_alpha()
+"""
 spiller = Trampoline(screen.get_width()/2, screen.get_height()/1.2)
-ball = Isak(screen.get_width()/2, screen.get_height()/2, random.choice([1, -1]), 1, sprite_sheet_image)
+ball = Isak(screen.get_width()/2, screen.get_height()/2, random.choice([1, -1]), 1)
 
 counter = 0
 poeng = 0
@@ -121,7 +121,7 @@ while RUNNING:
             break
 
 
-    screen.fill("black") 
+    screen.fill("black")
 
     if STARTING:
         # Tegn tittel tekst osv
@@ -140,9 +140,9 @@ while RUNNING:
         spiller.tegn()
         spiller.oppdater()
         # Tegne og oppdatere ball
-        pygame.draw.circle(screen, "white", [ball.x, ball.y], ball.r)
+        ball.tegn()
         ball.oppdater()
-        pygame.draw.rect(screen, "white", ball.rect)
+          
 
         # Fartegenskaper til ball
 
