@@ -177,7 +177,7 @@ while RUNNING:
             counter = 0
             
         # Tegne poengsum
-        tekst = poeng_font.render(str(poeng), True, "red")
+        tekst = poeng_font.render(str(poeng), True, "cyan")
         tekst_rect = tekst.get_rect(center=(screen.get_width()/2, screen.get_height()/2))
         screen.blit(tekst, tekst_rect)
 
