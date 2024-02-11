@@ -95,6 +95,11 @@ clock = pygame.time.Clock()
 mixer.music.load("Rihanna - Where Have You Been (Hardstyle Bootleg).wav")
 mixer.music.play(-1)
 
+image = pygame.image.load ('toilet.png')
+def Background_dass(image):
+    size = pygame.transform.scale(image,(700, 600))
+    screen.blit(size, (0, 0))
+
 font = pygame.font.SysFont("Arial", int(screen.get_height()/30))
 font2 = pygame.font.SysFont("Arial", 32)
 """
@@ -127,6 +132,19 @@ while RUNNING:
             inputword = ""
             break
 
+        if pygame.key.get_pressed()[pygame.K_RETURN] and ENDING:
+            print("Ching")
+            ENDING = False
+            STARTING = True
+            inputword = ""
+            break
+    
+        if pygame.key.get_pressed()[pygame.K_BACKSPACE] and ENDING:
+            print("Ching")
+            RUNNING = False
+            inputword = ""
+            break
+
 
     screen.fill("black")
 
@@ -143,14 +161,14 @@ while RUNNING:
 
 
     if INGAME:
+
+        Background_dass(image)
         # Tegner og oppdaterer spiller 
         spiller.tegn()
         spiller.oppdater()
         # Tegne og oppdatere ball
         ball.tegn()
         ball.oppdater()
-          
-
         # Fartegenskaper til ball
 
         # Kollisjon 
@@ -173,6 +191,32 @@ while RUNNING:
         tekst = poeng_font.render(str(poeng), True, "white")
         tekst_rect = tekst.get_rect(center=(screen.get_width()/2, screen.get_height()/2))
         screen.blit(tekst, tekst_rect)
+
+        if ball.y > screen.get_height():
+            ball.v = 5
+            ball.r = 10
+            ball = Isak(screen.get_width()/2, screen.get_height()/2, random.choice([1, -1]), 1)
+            spiller.size = 15
+            spiller = Trampoline(screen.get_width()/2, screen.get_height()/1.2)
+            spiller.image = pygame.transform.scale(spiller.image, (spiller.size*10, spiller.size*2))
+
+            counter = 0
+            poeng = 0
+            INGAME = False
+            ENDING = True
+
+    if ENDING:
+
+        screen.fill("black")
+
+        tekst3 = font2.render("GAME OVER", True, "white")
+        tekst_rect3 = tekst3.get_rect(center=(screen.get_width()/2, screen.get_height()/2))
+        screen.blit(tekst3, tekst_rect3)
+
+        # Tegn press return for å starte start
+        tekst4 = font.render("Press enter to restart, or backspace to end", True, "white")
+        tekst_rect4 = tekst4.get_rect(center=(screen.get_width()/2, screen.get_height()/1.5))
+        screen.blit(tekst4, tekst_rect4)
 
         
 
