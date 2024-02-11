@@ -22,18 +22,25 @@ class Trampoline(Spillerobjekt):
         self.color = "white"
         self.size = 15
         self.fart = 10
-        self.rect = pygame.Rect((self.x, self.y),(self.size*10, self.size*2))
+        self.image = pygame.image.load("trampoline.png")
+        self.image = pygame.transform.scale(self.image, (self.size*10, self.size*2))
+        self.rect = self.image.get_rect(center=(self.x, self.y))
 
     def oppdater(self):
         keys = pygame.key.get_pressed()
+        self.rect = self.image.get_rect(center=(self.x, self.y))
         if keys[pygame.K_a]:
             self.x -= self.fart
         if keys[pygame.K_d]:
             self.x += self.fart
 
     def tegn(self):
+        screen.blit(self.image, self.rect.topleft)
+
+        """
         pygame.draw.rect(screen, self.color, self.rect)
         self.rect = pygame.Rect((self.x, self.y), (self.size*10, self.size*2))
+        """
 
 
 # BAll klassen
@@ -164,6 +171,7 @@ while RUNNING:
         if counter == 5:
             ball.v = ball.v * 1.5
             spiller.size = spiller.size * 0.8
+            spiller.image = pygame.transform.scale(spiller.image, (spiller.size*10, spiller.size*2))
             counter = 0
             
         # Tegne poengsum
@@ -176,6 +184,10 @@ while RUNNING:
             ball.v = 5
             ball.r = 10
             ball = Isak(screen.get_width()/2, screen.get_height()/2, random.choice([1, -1]), 1)
+            spiller.size = 15
+            spiller = Trampoline(screen.get_width()/2, screen.get_height()/1.2)
+            spiller.image = pygame.transform.scale(spiller.image, (spiller.size*10, spiller.size*2))
+
             counter = 0
             poeng = 0
             INGAME = False
