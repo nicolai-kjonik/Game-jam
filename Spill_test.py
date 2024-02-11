@@ -95,6 +95,7 @@ clock = pygame.time.Clock()
 mixer.music.load("Rihanna - Where Have You Been (Hardstyle Bootleg).wav")
 mixer.music.play(-1)
 
+# Funksjon for bakgrunn
 image = pygame.image.load ('toilet.png')
 def Background_dass(image):
     size = pygame.transform.scale(image,(700, 600))
@@ -161,7 +162,7 @@ while RUNNING:
 
 
     if INGAME:
-
+        # Legger til bakgrunn i spillet
         Background_dass(image)
         # Tegner og oppdaterer spiller 
         spiller.tegn()

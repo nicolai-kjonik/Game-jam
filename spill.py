@@ -25,7 +25,7 @@ class Trampoline(Spillerobjekt):
         self.image = pygame.image.load("trampoline.png")
         self.image = pygame.transform.scale(self.image, (self.size*10, self.size*2))
         self.rect = self.image.get_rect(center=(self.x, self.y))
-
+#bevegelses funksjonen
     def oppdater(self):
         keys = pygame.key.get_pressed()
         self.rect = self.image.get_rect(center=(self.x, self.y))
@@ -33,7 +33,7 @@ class Trampoline(Spillerobjekt):
             self.x -= self.fart
         if keys[pygame.K_d]:
             self.x += self.fart
-
+#tegn funksjon
     def tegn(self):
         screen.blit(self.image, self.rect.topleft)
 
@@ -75,6 +75,12 @@ clock = pygame.time.Clock()
 # Bakgrunns musikk
 mixer.music.load("Rihanna - Where Have You Been (Hardstyle Bootleg).wav")
 mixer.music.play(-1)
+
+# Funksjon for bakgrunn
+image = pygame.image.load ('toilet.png')
+def Background_dass(image):
+    size = pygame.transform.scale(image,(700, 600))
+    screen.blit(size, (0, 0))
 
 # Forskjellige fonter
 font = pygame.font.SysFont("Arial", int(screen.get_height()/30))
@@ -143,6 +149,9 @@ while RUNNING:
 
 
     if INGAME:
+        # Tegner bakgrunnen før objektene
+        Background_dass(image)
+
         # Tegner og oppdaterer spiller 
         spiller.tegn()
         spiller.oppdater()
@@ -168,7 +177,7 @@ while RUNNING:
             counter = 0
             
         # Tegne poengsum
-        tekst = poeng_font.render(str(poeng), True, "white")
+        tekst = poeng_font.render(str(poeng), True, "red")
         tekst_rect = tekst.get_rect(center=(screen.get_width()/2, screen.get_height()/2))
         screen.blit(tekst, tekst_rect)
 
