@@ -4,6 +4,7 @@ import random
 import numpy as np
 from pygame import mixer
 
+# Spiller objekt klasse
 class Spillerobjekt():
     def __init__(self, start_x, start_y):
         self.x = start_x
@@ -11,12 +12,8 @@ class Spillerobjekt():
         self.color = "grey"
         self.size = 5
         self.rect = pygame.Rect((self.x, self.y),(self.size*2, self.size*2))
-"""
-    def tegn(self):
-        pygame.draw.rect(screen, self.color, self.rect)
-        self.rect = pygame.Rect((self.x, self.y), (self.size*2, self.size*2))
-"""
 
+# Spiller klassen
 class Trampoline(Spillerobjekt):
     def __init__(self, start_x, start_y):
         super().__init__(start_x, start_y)
@@ -38,6 +35,8 @@ class Trampoline(Spillerobjekt):
         pygame.draw.rect(screen, self.color, self.rect)
         self.rect = pygame.Rect((self.x, self.y), (self.size*10, self.size*2))
 
+
+# BAll klassen
 class Isak(Spillerobjekt):
     def __init__(self, start_x, start_y, start_vx, start_vy):
         super().__init__(start_x, start_y)
@@ -50,13 +49,9 @@ class Isak(Spillerobjekt):
         self.rect = self.image.get_rect(center=(self.x, self.y))
         self.vx = start_vx
         self.vy = start_vy
-#ISAK
+
     def tegn(self):
         screen.blit(self.image, self.rect.topleft)
-        """
-        pygame.draw.rect(screen, self.color, self.rect)
-        self.rect = pygame.Rect((self.x, self.y), (self.size*2, self.size*2))
-        """
 
     def oppdater(self):
         self.rect = self.image.get_rect(center=(self.x, self.y))
@@ -69,37 +64,27 @@ class Isak(Spillerobjekt):
         if self.y > screen.get_height() or self.y < 0:
             self.vy *= -1    
 
-"""
-    def get_image(self, frame, width, height, scale, colour):
-        image = pygame.Surface((width, height)).convert_alpha()
-        image.blit(self.sheet, (0, 0), ((frame * width), 0, width, height))
-        image = pygame.transform.scale(image, (width * scale, height * scale))
-        image.set_colorkey(colour)
-
-        return image
-"""
-
-
-
 pygame.init() 
 
 screen = pygame.display.set_mode((700, 600)) # Setter skjermen til 700x500 piksler. 
 clock = pygame.time.Clock() 
+
+# Bakgrunns musikk
 mixer.music.load("Rihanna - Where Have You Been (Hardstyle Bootleg).wav")
 mixer.music.play(-1)
 
+# Forskjellige fonter
 font = pygame.font.SysFont("Arial", int(screen.get_height()/30))
 font2 = pygame.font.SysFont("Arial", 32)
-"""
-sprite_sheet_image = pygame.image.load('Mort.png').convert_alpha()
-"""
+poeng_font = pygame.font.SysFont("Arial", int(screen.get_height()/30))
+
+# Spiller og ball objekter
 spiller = Trampoline(screen.get_width()/2, screen.get_height()/1.2)
 ball = Isak(screen.get_width()/2, screen.get_height()/2, random.choice([1, -1]), 1)
 
+# Poeng
 counter = 0
 poeng = 0
-poeng_font = pygame.font.SysFont("Arial", int(screen.get_height()/30))
-# Initialiserer objekter 
 
 STARTING = True
 INGAME = False
@@ -110,33 +95,42 @@ while RUNNING:
  # Avslutter løkken 
     for event in pygame.event.get():
 
-        if event.type == pygame.QUIT: 
-            RUNNING = False 
+        # Hvis boolen RUNNING er false så slutter spillet
+        if event.type == pygame.QUIT:  
+            RUNNING = False  
 
-        if pygame.key.get_pressed()[pygame.K_RETURN] and STARTING:
+
+        # Hvis man er i starting og enter blir trykket så starter spillet
+        if pygame.key.get_pressed()[pygame.K_RETURN] and STARTING: 
             print("Ching")
             STARTING = False
             INGAME = True
             inputword = ""
             break
 
-        if pygame.key.get_pressed()[pygame.K_RETURN] and ENDING:
+        # Hvis du har dødd og er i ending screen så går den tilbake til starting screenen
+        if pygame.key.get_pressed()[pygame.K_RETURN] and ENDING: 
             print("Ching")
             ENDING = False
             STARTING = True
             inputword = ""
             break
-    
-        if pygame.key.get_pressed()[pygame.K_BACKSPACE] and ENDING:
+        
+        # HVis du har dødd og presser backspace lukker spillet seg
+        if pygame.key.get_pressed()[pygame.K_BACKSPACE] and ENDING: 
             print("Ching")
             RUNNING = False
             inputword = ""
             break
 
 
-    screen.fill("black")
+    
 
     if STARTING:
+
+        # Fyller skjermen svart
+        screen.fill("black")
+
         # Tegn tittel tekst osv
         tekst1 = font2.render("Bouncing Isak", True, "white")
         tekst_rect1 = tekst1.get_rect(center=(screen.get_width()/2, screen.get_height()/2))
@@ -152,15 +146,12 @@ while RUNNING:
         # Tegner og oppdaterer spiller 
         spiller.tegn()
         spiller.oppdater()
+
         # Tegne og oppdatere ball
         ball.tegn()
         ball.oppdater()
-          
-
-        # Fartegenskaper til ball
 
         # Kollisjon 
-    
         if pygame.Rect.colliderect(spiller.rect, ball.rect):
             if ball.vy > 0:
                 ball.vy *= -1
@@ -168,18 +159,20 @@ while RUNNING:
                 counter += 1
                   
 
-
+        # Poengsum teller og triggerer
+                
         if counter == 5:
             ball.v = ball.v * 1.5
             spiller.size = spiller.size * 0.8
             counter = 0
             
-        # Poeng
+        # Tegne poengsum
         tekst = poeng_font.render(str(poeng), True, "white")
         tekst_rect = tekst.get_rect(center=(screen.get_width()/2, screen.get_height()/2))
         screen.blit(tekst, tekst_rect)
 
-        if ball.y > screen.get_height():
+        # Resetter posisjoner og verdier hvis du dør
+        if ball.y > screen.get_height():    
             ball.v = 5
             ball.r = 10
             ball = Isak(screen.get_width()/2, screen.get_height()/2, random.choice([1, -1]), 1)
@@ -187,12 +180,15 @@ while RUNNING:
             poeng = 0
             INGAME = False
             ENDING = True
+            
+    # Slutt fasen
+    if ENDING: 
 
-    if ENDING:
+        # Fyller skjermen med svart
+        screen.fill("black") 
 
-        screen.fill("black")
-
-        tekst3 = font2.render("GAME OVER", True, "white")
+        #Skriver game over
+        tekst3 = font2.render("GAME OVER", True, "white")   
         tekst_rect3 = tekst3.get_rect(center=(screen.get_width()/2, screen.get_height()/2))
         screen.blit(tekst3, tekst_rect3)
 
