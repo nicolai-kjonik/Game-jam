@@ -37,10 +37,6 @@ class Trampoline(Spillerobjekt):
     def tegn(self):
         screen.blit(self.image, self.rect.topleft)
 
-        """
-        pygame.draw.rect(screen, self.color, self.rect)
-        self.rect = pygame.Rect((self.x, self.y), (self.size*10, self.size*2))
-        """
 
 
 # BAll klassen
@@ -130,9 +126,6 @@ while RUNNING:
             inputword = ""
             break
 
-
-    
-
     if STARTING:
 
         # Fyller skjermen svart
@@ -192,7 +185,7 @@ while RUNNING:
             poeng = 0
             INGAME = False
             ENDING = True
-            
+
     # Slutt fasen
     if ENDING: 
 
