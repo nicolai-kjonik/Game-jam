@@ -77,7 +77,7 @@ mixer.music.load("Rihanna - Where Have You Been (Hardstyle Bootleg).wav")
 mixer.music.play(-1)
 
 # Funksjon for bakgrunn
-image = pygame.image.load ('toilet.png')
+image = pygame.image.load ('bakgrunn.png')
 def Background_dass(image):
     size = pygame.transform.scale(image,(700, 600))
     screen.blit(size, (0, 0))
