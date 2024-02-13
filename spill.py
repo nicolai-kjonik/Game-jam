@@ -83,8 +83,16 @@ sound_effect.set_volume(0.4)
 
 # Funksjon for bakgrunn
 image = pygame.image.load ('toilet.png')
-def Background_dass(image):
+def Background_ingame(image):
     size = pygame.transform.scale(image,(700, 600))
+    screen.blit(size, (0, 0))
+image2 = pygame.image.load ('start_bakgrunn.png')
+def Background_start(image2):
+    size = pygame.transform.scale(image2,(700, 600))
+    screen.blit(size, (0, 0))
+image3 = pygame.image.load ('slutt_bakgrunn.png')
+def Background_ending(image3):
+    size = pygame.transform.scale(image3,(700, 600))
     screen.blit(size, (0, 0))
 
 # Forskjellige fonter
@@ -142,9 +150,8 @@ while RUNNING:
             break
 
     if STARTING:
-
-        # Fyller skjermen svart
-        screen.fill("black")
+        # Bakgrunn startingen
+        Background_start(image2)
 
         # Tegn tittel tekst osv
         tekst1 = font2.render("Bouncing Stian", True, "white")
@@ -159,7 +166,7 @@ while RUNNING:
 
     if INGAME:
         # Tegner bakgrunnen før objektene
-        Background_dass(image)
+        Background_ingame(image)
 
         # Tegner og oppdaterer spiller 
         spiller.tegn()
@@ -206,9 +213,9 @@ while RUNNING:
 
     # Slutt fasen
     if ENDING: 
-
-        # Fyller skjermen med svart
-        screen.fill("black") 
+        # Bakgrunn til endingen
+        Background_ending(image3)
+        
 
         #Skriver game over
         tekst3 = font2.render("GAME OVER", True, "white")   
