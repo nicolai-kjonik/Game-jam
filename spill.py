@@ -73,8 +73,13 @@ screen = pygame.display.set_mode((700, 600)) # Setter skjermen til 700x500 piksl
 clock = pygame.time.Clock() 
 
 # Bakgrunns musikk
-mixer.music.load("Rihanna - Where Have You Been (Hardstyle Bootleg).wav")
-mixer.music.play(-1)
+
+sang = pygame.mixer.Sound("Rihanna - Where Have You Been (Hardstyle Bootleg).wav")
+sang.play(-1)
+sang.set_volume(0.3)
+
+sound_effect = pygame.mixer.Sound("gas.wav")
+sound_effect.set_volume(0.4)
 
 # Funksjon for bakgrunn
 image = pygame.image.load ('toilet.png')
@@ -170,6 +175,7 @@ while RUNNING:
                 ball.vy *= -1
                 poeng += 1
                 counter += 1
+                pygame.mixer.Sound.play(sound_effect)
                   
 
         # Poengsum teller og triggerer
