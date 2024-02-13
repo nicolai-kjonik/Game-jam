@@ -88,9 +88,9 @@ def Background_dass(image):
     screen.blit(size, (0, 0))
 
 # Forskjellige fonter
-font = pygame.font.SysFont("Arial", int(screen.get_height()/30))
-font2 = pygame.font.SysFont("Arial", 32)
-poeng_font = pygame.font.SysFont("Arial", int(screen.get_height()/25))
+font = pygame.font.Font('bridgeofficer.ttf', int(screen.get_height()/30))
+font2 = pygame.font.Font('bridgeofficer.ttf', 32)
+poeng_font = pygame.font.Font('bridgeofficer.ttf', int(screen.get_height()/25))
 
 # Spiller og ball objekter
 spiller = Trampoline(screen.get_width()/2, screen.get_height()/1.2)
