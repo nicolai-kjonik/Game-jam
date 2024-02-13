@@ -77,7 +77,7 @@ mixer.music.load("Rihanna - Where Have You Been (Hardstyle Bootleg).wav")
 mixer.music.play(-1)
 
 # Funksjon for bakgrunn
-image = pygame.image.load ('bakgrunn.png')
+image = pygame.image.load ('toilet.png')
 def Background_dass(image):
     size = pygame.transform.scale(image,(700, 600))
     screen.blit(size, (0, 0))
@@ -122,6 +122,10 @@ while RUNNING:
             print("Ching")
             ENDING = False
             STARTING = True
+
+            counter = 0
+            poeng = 0
+
             inputword = ""
             break
         
@@ -138,7 +142,7 @@ while RUNNING:
         screen.fill("black")
 
         # Tegn tittel tekst osv
-        tekst1 = font2.render("Bouncing Isak", True, "white")
+        tekst1 = font2.render("Bouncing Stian", True, "white")
         tekst_rect1 = tekst1.get_rect(center=(screen.get_width()/2, screen.get_height()/2))
         screen.blit(tekst1, tekst_rect1)
 
@@ -190,8 +194,7 @@ while RUNNING:
             spiller = Trampoline(screen.get_width()/2, screen.get_height()/1.2)
             spiller.image = pygame.transform.scale(spiller.image, (spiller.size*10, spiller.size*2))
 
-            counter = 0
-            poeng = 0
+            
             INGAME = False
             ENDING = True
 
@@ -210,6 +213,11 @@ while RUNNING:
         tekst4 = font.render("Press enter to restart, or backspace to end", True, "white")
         tekst_rect4 = tekst4.get_rect(center=(screen.get_width()/2, screen.get_height()/1.5))
         screen.blit(tekst4, tekst_rect4)
+
+        # Tegner poengsum
+        tekst = poeng_font.render(f"Your score is {str(poeng)}", True, "white")
+        tekst_rect = tekst.get_rect(center=(screen.get_width()/2, screen.get_height()/4))
+        screen.blit(tekst, tekst_rect)
 
         
 
