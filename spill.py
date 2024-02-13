@@ -78,7 +78,7 @@ sang = pygame.mixer.Sound("Rihanna - Where Have You Been (Hardstyle Bootleg).wav
 sang.play(-1)
 sang.set_volume(0.3)
 
-sound_effect = pygame.mixer.Sound("gas.wav")
+sound_effect = pygame.mixer.Sound("bounce.wav")
 sound_effect.set_volume(0.4)
 
 # Funksjon for bakgrunn
